@@ -1,0 +1,12 @@
+spring:
+    datasource:
+        driver-class-name: com.mysql.cj.jdbc.Driver
+        maxPool-size: 100
+        minIdle: 10
+        password: 1234
+        url: jdbc:mysql://${DB_HOST:localhost}:3306/doctors?createDatabaseIfNotExist=true
+        username: root
+    jpa:
+        hibernate:
+            ddl-auto: update
+        show-sql: true

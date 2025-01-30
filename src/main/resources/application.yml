@@ -1,0 +1,20 @@
+server:
+    port: 7070
+spring:
+    application:
+        name: doctor-service
+    profiles:
+      active: prod
+
+    cache:
+        type: redis
+        redis:
+            time-to-live: 60000
+            cache-null-values: true
+
+    jpa:
+        show-sql: true
+
+
+
+

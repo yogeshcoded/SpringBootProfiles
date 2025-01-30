@@ -1,0 +1,40 @@
+version: "3.8"
+services:
+  doctordb:
+    image: mysql:8.0.35
+    container_name: doctordb
+    healthcheck:
+      test: [ "CMD", "mysqladmin", "ping", "-h", "doctordb" ]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+      start_period: 10s
+    ports:
+      - '3307:3306'
+    environment:
+      MYSQL_ROOT_PASSWORD: 1234
+      MYSQL_DATABASE: doctors
+
+
+  doctor-service:
+    image: doctor-service
+    container_name: doctor
+    build: .
+    environment:
+      DB_HOST: doctordb
+    depends_on:
+      doctordb:
+        condition: service_healthy
+      redis:
+        condition: service_started
+
+
+    ports:
+      - "7070:7070"
+
+
+  redis:
+    image: redis:latest
+    container_name: redis
+    ports:
+      - "6379:6379"
